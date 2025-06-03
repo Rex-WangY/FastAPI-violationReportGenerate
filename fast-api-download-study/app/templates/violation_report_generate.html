@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Violation Report Generate</title>
+</head>
+<body>
+    <h2>违规账户报告生成</h2>
+    <form action="/violation_report_generate" method="post">
+        <label for="symbol">请输入symbol：</label>
+        <input type="text" id="symbol" name="symbol" required>
+        <button type="submit">确认</button>
+    </form>
+    {% if symbol %}
+    <form action="/download_excel" method="post">
+        <input type="hidden" name="symbol" value="{{ symbol }}">
+        <button type="submit">下载Excel</button>
+    </form>
+    {% endif %}
+
+    {% if result %}
+        <h3>查询结果：</h3>
+        {% for name, html_table in result.items() %}
+            <h4>{{ name }}</h4>
+            {{ html_table | safe }}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
